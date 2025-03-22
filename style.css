@@ -563,7 +563,8 @@ td {
     .logo {
         margin: 0;
     }
-
+.sidebar {
+    padding: 1rem 1rem;}
     .main-content {
         padding: 1rem;
     }
