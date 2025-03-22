@@ -549,7 +549,7 @@ td {
     
     nav ul {
         display: flex;
-        gap: 20px;
+        gap: 8px;
     }
 
     nav ul li {
