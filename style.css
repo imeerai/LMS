@@ -11,6 +11,11 @@ body {
     overflow-x: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
 
 body {
     background-color: rgb(249, 245, 245);
@@ -162,7 +167,6 @@ body {
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
     border-radius: 20px 0 0 20px;
     transition: all 0.3s ease;
-    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar .logo {
@@ -543,7 +547,14 @@ td {
     .dashboard-container {
         grid-template-columns: 1fr;
     }
-
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        justify-content: space-between;
+ 
+        
+    }
     nav ul {
         display: flex;
         gap: 20px;
@@ -557,7 +568,7 @@ td {
     .logo {
         margin: 0;
     }
-    
+
     .main-content {
         padding: 1rem;
     }
