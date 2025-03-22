@@ -161,6 +161,8 @@ body {
     padding: 2rem 1rem;
     box-shadow: 4px 0 12px rgba(0, 0, 0, 0.05);
     border-radius: 20px 0 0 20px;
+    transition: all 0.3s ease;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.5);
 }
 
 .sidebar .logo {
@@ -542,10 +544,20 @@ td {
         grid-template-columns: 1fr;
     }
 
-    .sidebar {
-        display: none;
+    nav ul {
+        display: flex;
+        gap: 20px;
     }
 
+    nav ul li {
+        padding: 0;
+        margin: 0;
+    }
+
+    .logo {
+        margin: 0;
+    }
+    
     .main-content {
         padding: 1rem;
     }
