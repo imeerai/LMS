@@ -35,7 +35,9 @@ body {
 .dark-mode .course-car {
     background-color: #333;
 }
-
+.dark-mode .profile-card {
+    background-color: #1e1e1e;
+}
 .dark-mode .sidebar nav ul li a {
     color: rgb(196, 191, 191);
 }
@@ -59,12 +61,16 @@ body {
 
 .profile-card {
     max-width: 450px;
-    margin: 40px auto;
+    margin: 0px auto;
     padding: 10px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     transition: transform 0.3s ease;
+    background-color: #fff;
+    border-radius: 20px; /* Curved edges */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
 }
+
 
 .profile-card:hover {
     transform: translateY(-5px);
@@ -157,13 +163,22 @@ body {
 }
 
 .sidebar .logo {
+   display: flex;
+   justify-content: space-evenly;
+}
+
+.sidebar h2 {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 3rem;
     text-align: center;
     color: #7f5af0;
 }
-
+.sidebar .logo img{
+    width: 70px;
+    height: 50px;
+    padding-top: 5px;
+}
 .sidebar nav ul {
     list-style: none;
     padding: 0;
@@ -232,6 +247,15 @@ header h2 {
 .new-courses h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
+}
+.new-courses .h3 img{
+    width: 25px;
+    height: 25px;
+}
+.new-courses .h3{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .course-cards {
@@ -534,6 +558,7 @@ td {
     .dashboard-container {
         grid-template-columns: 1fr;
     }
+
     .sidebar {
         width: 100%;
         height: auto;
@@ -547,9 +572,10 @@ td {
         padding: 0;
     }
 
-.sidebar .logo {
-    margin-bottom: 0;}
-    
+    .sidebar .logo {
+        margin-bottom: 0;
+    }
+
     nav ul {
         display: flex;
         gap: 8px;
@@ -563,8 +589,11 @@ td {
     .logo {
         margin: 0;
     }
-.sidebar {
-    padding: 1rem 1rem;}
+
+    .sidebar {
+        padding: 1rem 1rem;
+    }
+
     .main-content {
         padding: 1rem;
     }
@@ -572,6 +601,7 @@ td {
     .course-card {
         width: 100%;
     }
+
     .search-bar input {
         display: none;
     }
@@ -580,17 +610,16 @@ td {
 
 
 @media (max-width: 558px) {
-    .lll{
+    .lll {
         display: none;
     }
-    .my-courses{
+
+    .my-courses {
         padding: 2px;
     }
-    .content-section h2{
+
+    .content-section h2 {
         font: 20px;
     }
 
 }
-
-
-
