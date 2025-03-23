@@ -5,29 +5,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <style>
+        #calendar {
+            max-width: 700px;
+            margin: 40px auto;
+        }
+        #reminderList {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        
+    </style>
 </head>
 
 <body>
-    
+
 
     <div class="dashboard-container">
         <!-- Sidebar -->
         <aside class="sidebar lolo ">
-            <div class="logo">Online LP</div>
+         
+            <div class="logo"> 
+                <img src="image.png" alt="">
+                <h2>
+                    Online LP
+                </h2>
+               </div>
             <nav>
                 <ul>
                     <li class="active"><a href="#" id="dashboard-link">Dashboard</a></li>
                     <li><a href="#" id="courses-link">Courses</a></li>
                     <li><a href="#" id="quizzes-link">Quizzes</a></li>
-                    <li><a href="#" id="settings-link">Settings</a></li>
                     <li><a href="#" id="Grades-link">Grades</a></li>
+                    <li><a href="#" id="reminder-link">Reminder</a></li>
+                    <li><a href="#" id="settings-link">Settings</a></li>
+
                 </ul>
             </nav>
         </aside>
-        
- 
+
+
 
         <!-- Main Content -->
         <main class="main-content">
@@ -38,7 +60,7 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Search...">
                     </div>
-                    <button id="theme-toggle">🌙</button>  
+                    <button id="theme-toggle">🌙</button>
                 </header>
 
                 <section class="new-courses">
@@ -97,10 +119,12 @@
                     <div class="search-bar">
                         <input type="text" placeholder="Search...">
                     </div>
-                    <button id="theme-toggle">🌙</button>  
+                    <button id="theme-toggle">🌙</button>
                 </header>
                 <section class="new-courses">
-                    <div class="h3"><h3>New Courses</h3> <img src="LL].svg" alt="" onclick="ff()"> </div>
+                    <div class="h3">
+                        <h3>New Courses</h3> <img src="LL].svg" alt="" onclick="ff()">
+                    </div>
                     <div class="course-cars">
                         <div class="course-car">
                             <img src="WE.jpg" alt="Web Engineering">
@@ -129,7 +153,7 @@
                         </div>
                     </div>
                 </section>
-    
+
             </div>
 
             <!-- Quizzes Section -->
@@ -161,6 +185,7 @@
                         </div>
                     </div>
                 </section>
+
             </div>
 
             <!-- Grades Section -->
@@ -228,9 +253,6 @@
                                 <td class="certificate"><a href="#">Download Certificate</a></td>
                             </tr>
                         </table>
-
-
-
                     </div>
                     <h3>Marks Progress Chart</h3>
                     <canvas id="marksChart"></canvas>
@@ -274,8 +296,8 @@
                         <input type="text" placeholder="Search...">
                     </div>
                     <button id="theme-toggle">🌙</button>
-                
-                
+
+
                 </header>
                 <section class="new-courses">
                     <h3>Profile</h3>
@@ -283,30 +305,71 @@
                         <img src="/dp.jpg" alt="User" class="profile-img">
                         <h4 class="profile-name">Zameer Abbas</h4>
                         <p class="profile-degree">Bachelor of Engineering in Computer Systems</p>
-                    
+
                         <div class="form-group">
                             <label for="cnic">CNIC</label>
                             <input type="text" id="cnic" placeholder="Enter your CNIC">
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="email">Email</label>
                             <input type="text" id="email" placeholder="abbaszameer234@gmail.com">
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="password">Password</label>
                             <input type="password" id="password" placeholder="Enter your password">
                         </div>
-                    
+
                         <div class="form-group">
                             <label for="new-password">New Password</label>
                             <input type="password" id="new-password" placeholder="Enter new password">
                         </div>
-                        <div class="form-group"> 
+                        <div class="form-group">
                             <input type="button" value="Save" class="save-btn">
 
                         </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="reminder-section" class="content-section" style="display: none;">
+                <header>
+                    <h2>Reminder</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+
+
+                </header>
+                <section class="new-courses">
+
+                    <div class="profile-card">
+                        <form id="reminderForm">
+                            <div class="form-group">
+                                <label for="reminderTitle">Reminder Title:</label>
+                                <input type="text" id="reminderTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reminderDate">Date:</label>
+                                <input type="date" id="reminderDate" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="reminderTime">Time:</label>
+                                <input type="time" id="reminderTime" required>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="button" value="Add to calendar" class="save-btn">
+
+                            </div>
+                        </form>
+                        <h2>Your Reminders</h2>
+                        <div id="reminderList"></div>
+
+                       
                     </div>
                 </section>
             </div>
@@ -484,7 +547,7 @@
         });
 
 
-        
+
 
     </script>
 
