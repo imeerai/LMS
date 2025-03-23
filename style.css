@@ -168,7 +168,7 @@ body {
 }
 
 .sidebar h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 3rem;
     text-align: center;
@@ -185,7 +185,7 @@ body {
 }
 
 .sidebar nav ul li {
-    padding: 1rem 0;
+    padding: 1rem 1rem;
     border-radius: 12px;
     transition: background 0.3s ease;
 }
@@ -558,27 +558,18 @@ td {
     .dashboard-container {
         grid-template-columns: 1fr;
     }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        justify-content: space-between;
-
-    }
-
     .sidebar nav ul li a {
-
-        padding: 0;
+     padding-left: 10px;
     }
-
     .sidebar .logo {
         margin-bottom: 0;
+        justify-content: center;
     }
-
     nav ul {
-        display: flex;
+display: flex;
         gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center
     }
 
     nav ul li {
@@ -607,7 +598,6 @@ td {
     }
 
 }
-
 
 @media (max-width: 558px) {
     .lll {
