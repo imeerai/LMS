@@ -58,18 +58,28 @@ body {
 
     color: #fdfdfd;
 }
-
 .profile-card {
-    max-width: 450px;
-    margin: 0px auto;
-    padding: 10px;
+    max-width: 400px; /* Card ka width thoda chhota rakha */
+    margin: 6px auto; /* Center mein laane ke liye */
+    padding: 20px;
     text-align: center;
     font-family: 'Poppins', sans-serif;
     transition: transform 0.3s ease;
     background-color: #fff;
     border-radius: 20px; /* Curved edges */
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    box-sizing: border-box; /* Ensure internal padding doesn't expand size */
 }
+
+.profile-card input {
+    width: 100%; /* Input fields ko card ke andar fit kiya */
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #aaa;
+    border-radius: 8px;
+    box-sizing: border-box; /* Padding add karne se width na badhe */
+}
+
 
 
 .profile-card:hover {
