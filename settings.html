@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+
+
+<body>
+
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar lolo ">
+         
+            <div class="logo"> 
+                <img src="image.png" alt="">
+                <h2>
+                    Online LP
+                </h2>
+               </div>
+            <nav>
+                <ul>
+                    <li ><a href="index.html" >Dashboard</a></li>
+                    <li><a href="courses.html">Courses</a></li>
+                    <li  ><a href="quizes.html" >Quizzes</a></li>
+                    <li ><a href="grades.html" >Grades</a></li>
+                    <li ><a href="reminder.html" >Reminder</a></li>
+                    <li class="active"><a href="reminder.html" >Settings</a></li>
+
+                </ul>
+            </nav>
+        </aside>
+
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+             <!-- Settings Section -->
+             <div id="settings-section" class="content-section" >
+                <header>
+                    <h2>Settings</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+
+
+                </header>
+                <section class="new-courses">
+                    <h3>Profile</h3>
+                    <div class="profile-card">
+                        <img src="/dp.jpg" alt="User" class="profile-img" id="profile-img">
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                                                <h4 class="profile-name">Zameer Abbas</h4>
+                        <p class="profile-degree">Bachelor of Engineering in Computer Systems</p>
+
+                        <div class="form-group">
+                            <label for="cnic">CNIC</label>
+                            <input type="text" id="cnic" placeholder="Enter your CNIC">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" id="email" placeholder="abbaszameer234@gmail.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password"> Old Password</label>
+                            <input type="password" id="password" placeholder="Enter your password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <input type="button" value="Save" class="save-btn">
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+           
+
+        </main>
+
+        <aside class="profile-section">
+            <div class="profile-card">
+                <img src="/dp.jpg" alt="User">
+                <h4>Zameer Abbas</h4>
+                <p>Bachelor of Engineering in Computer Systems</p>
+            </div>
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button id="prev-week">&lt;</button>
+                    <h4 id="calendar-month"></h4>
+                    <button id="next-week">&gt;</button>
+                </div>
+                <table id="calendar-table">
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                    <tr id="week-row"></tr>
+                </table>
+            </div>
+
+            <!-- Study Reminders -->
+            <div class="homework-progress">
+                <h4>Study Reminders</h4>
+                <div class="progress-card">
+                    <p>WE Quize</p>
+                    <span>now</span>
+                </div>
+                <div class="progress-card">
+                    <p>SE Presentation</p>
+                    <span>1 hour</span>
+                </div>
+                <div class="progress-card">
+                    <p>MIT quize</p>
+                    <span> 2 hours </span>
+                </div>
+                <div class="progress-card">
+                    <p>CN quize</p>
+                    <span>3 hours </span>
+                </div>
+                <div class="progress-card">
+                    <p>SP ckass</p>
+                    <span>4 hour</span>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+    <script>
+        // Calendar Script with Green Circle on Today's Date
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarTable = document.getElementById("week-row");
+            const prevWeekBtn = document.getElementById("prev-week");
+            const nextWeekBtn = document.getElementById("next-week");
+            const calendarMonth = document.getElementById("calendar-month");
+
+            let currentDate = new Date();
+
+            function updateWeek() {
+                let start = new Date(currentDate);
+                let day = start.getDay();
+                let diff = start.getDate() - day + (day === 0 ? -6 : 1);
+                start.setDate(diff);
+
+                let weekDates = [];
+                let today = new Date().getDate();
+                let currentMonth = new Date().getMonth();
+                let currentYear = new Date().getFullYear();
+
+                for (let i = 0; i < 7; i++) {
+                    let tempDate = new Date(start);
+                    tempDate.setDate(start.getDate() + i);
+
+                    let isToday = (tempDate.getDate() === today && tempDate.getMonth() === currentMonth && tempDate.getFullYear() === currentYear);
+
+                    let dateHTML = isToday
+                        ? `<td style="background-color: green; color: white; border-radius: 50%; padding: 5px; text-align: center;">${tempDate.getDate()}</td>`
+                        : `<td>${tempDate.getDate()}</td>`;
+
+                    weekDates.push(dateHTML);
+                }
+
+                calendarTable.innerHTML = weekDates.join("");
+                let updatedMonth = start.toLocaleString("default", { month: "long" });
+                let updatedYear = start.getFullYear();
+                calendarMonth.innerText = `${updatedMonth} ${updatedYear}`;
+            }
+
+            prevWeekBtn.addEventListener("click", function () {
+                currentDate.setDate(currentDate.getDate() - 7);
+                updateWeek();
+            });
+
+            nextWeekBtn.addEventListener("click", function () {
+                currentDate.setDate(currentDate.getDate() + 7);
+                updateWeek();
+            });
+
+            updateWeek();
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body; // Body element
+
+    // Apply Theme on Page Load
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+    }
+
+    // Theme Toggle Functionality
+    themeToggle.addEventListener("click", function () {
+        body.classList.toggle("dark-mode");
+
+        // Save Theme Preference to Local Storage
+        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const profileImg = document.getElementById("profile-img");
+    const imageUpload = document.getElementById("image-upload");
+
+    profileImg.addEventListener("click", function () {
+        imageUpload.click();
+    });
+
+    imageUpload.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImg.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+});
+
+    </script>
+    
+
+</body>
+
+</html>

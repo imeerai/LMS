@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">    
+</head>
+
+
+<body>
+
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar lolo ">
+         
+            <div class="logo"> 
+                <img src="image.png" alt="">
+                <h2>
+                    Online LP
+                </h2>
+               </div>
+            <nav>
+                <ul>
+                    <li  ><a href="index.html" >Dashboard</a></li>
+                    <li ><a href="courses.html">Courses</a></li>
+                    <li  ><a href="quizes.html" >Quizzes</a></li>
+                    <li class="active"><a href="grades.html" >Grades</a></li>
+                    <li ><a href="reminder.html" >Reminder</a></li>
+                    <li ><a href="reminder.html" >Settings</a></li>
+
+                </ul>
+            </nav>
+        </aside>
+
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+           
+            <div id="grades-section" class="content-section">
+                <header>
+                    <h2>Grades</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+                </header>
+                <section class="my-courses">
+                    <h3>Progress</h3>
+                    <div>
+                        <div style="background-color: pink;">
+                            <span>Today's task</span>
+                            <h2>7</h2>
+                            <p><a href="">details → </a></p>
+                        </div>
+                        <div>
+                            <span>You completed</span>
+                            <h2>72</h2>
+                            <p><a href="">details → </a></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="new-courses">
+                    <h3>Progress</h3>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th class="wide">Courses</th>
+                                <th class="medium">Progress</th>
+                                <th class="small">Marks</th>
+                                <th class="wide">Certificate</th>
+                            </tr>
+                            <tr>
+                                <td>Web Engineering (WE)</td>
+                                <td class="completed">Completed</td>
+                                <td>87</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Software Engineering (SP)</td>
+                                <td class="completed">Completed</td>
+                                <td>89</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>System Programming (SP)</td>
+                                <td class="completed">Completed</td>
+                                <td>92</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Computer Networks (CN)</td>
+                                <td class="completed">Completed</td>
+                                <td>66</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Management Information Technology (MIT)</td>
+                                <td class="completed">Completed</td>
+                                <td>78</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h3>Marks Progress Chart</h3>
+                    <canvas id="marksChart"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                    <script>
+                        const ctx = document.getElementById('marksChart').getContext('2d');
+
+                        const marksChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['WE', 'SP', 'SP', 'CN', 'MIT'],
+                                datasets: [{
+                                    label: 'Marks',
+                                    data: [87, 89, 92, 66, 78],
+                                    backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#F44336', '#9C27B0'],
+                                    borderColor: '#000',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </section>
+            </div>
+
+
+        </main>
+
+        <aside class="profile-section">
+            <div class="profile-card">
+                <img src="/dp.jpg" alt="User">
+                <h4>Zameer Abbas</h4>
+                <p>Bachelor of Engineering in Computer Systems</p>
+            </div>
+
+            <div class="calendar">
+                <div class="calendar-header">
+                    <button id="prev-week">&lt;</button>
+                    <h4 id="calendar-month"></h4>
+                    <button id="next-week">&gt;</button>
+                </div>
+                <table id="calendar-table">
+                    <tr>
+                        <th>Sun</th>
+                        <th>Mon</th>
+                        <th>Tue</th>
+                        <th>Wed</th>
+                        <th>Thu</th>
+                        <th>Fri</th>
+                        <th>Sat</th>
+                    </tr>
+                    <tr id="week-row"></tr>
+                </table>
+            </div>
+
+            <!-- Study Reminders -->
+            <div class="homework-progress">
+                <h4>Study Reminders</h4>
+                <div class="progress-card">
+                    <p>WE Quize</p>
+                    <span>now</span>
+                </div>
+                <div class="progress-card">
+                    <p>SE Presentation</p>
+                    <span>1 hour</span>
+                </div>
+                <div class="progress-card">
+                    <p>MIT quize</p>
+                    <span> 2 hours </span>
+                </div>
+                <div class="progress-card">
+                    <p>CN quize</p>
+                    <span>3 hours </span>
+                </div>
+                <div class="progress-card">
+                    <p>SP ckass</p>
+                    <span>4 hour</span>
+                </div>
+
+            </div>
+        </aside>
+    </div>
+    <script>
+        // Calendar Script with Green Circle on Today's Date
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarTable = document.getElementById("week-row");
+            const prevWeekBtn = document.getElementById("prev-week");
+            const nextWeekBtn = document.getElementById("next-week");
+            const calendarMonth = document.getElementById("calendar-month");
+
+            let currentDate = new Date();
+
+            function updateWeek() {
+                let start = new Date(currentDate);
+                let day = start.getDay();
+                let diff = start.getDate() - day + (day === 0 ? -6 : 1);
+                start.setDate(diff);
+
+                let weekDates = [];
+                let today = new Date().getDate();
+                let currentMonth = new Date().getMonth();
+                let currentYear = new Date().getFullYear();
+
+                for (let i = 0; i < 7; i++) {
+                    let tempDate = new Date(start);
+                    tempDate.setDate(start.getDate() + i);
+
+                    let isToday = (tempDate.getDate() === today && tempDate.getMonth() === currentMonth && tempDate.getFullYear() === currentYear);
+
+                    let dateHTML = isToday
+                        ? `<td style="background-color: green; color: white; border-radius: 50%; padding: 5px; text-align: center;">${tempDate.getDate()}</td>`
+                        : `<td>${tempDate.getDate()}</td>`;
+
+                    weekDates.push(dateHTML);
+                }
+
+                calendarTable.innerHTML = weekDates.join("");
+                let updatedMonth = start.toLocaleString("default", { month: "long" });
+                let updatedYear = start.getFullYear();
+                calendarMonth.innerText = `${updatedMonth} ${updatedYear}`;
+            }
+
+            prevWeekBtn.addEventListener("click", function () {
+                currentDate.setDate(currentDate.getDate() - 7);
+                updateWeek();
+            });
+
+            nextWeekBtn.addEventListener("click", function () {
+                currentDate.setDate(currentDate.getDate() + 7);
+                updateWeek();
+            });
+
+            updateWeek();
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+    const themeToggle = document.getElementById("theme-toggle");
+    const body = document.body; // Body element
+
+    // Apply Theme on Page Load
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+    }
+
+    // Theme Toggle Functionality
+    themeToggle.addEventListener("click", function () {
+        body.classList.toggle("dark-mode");
+
+        // Save Theme Preference to Local Storage
+        localStorage.setItem("theme", body.classList.contains("dark-mode") ? "dark" : "light");
+    });
+});
+
+
+
+
+
+    </script>
+
+</body>
+
+</html>
