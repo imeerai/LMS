@@ -163,7 +163,7 @@ body {
 
 .sidebar .logo {
    display: flex;
-   justify-content: space-evenly;
+   justify-content: flex-start;
 }
 
 .sidebar h2 {
