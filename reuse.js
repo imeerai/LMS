@@ -13,7 +13,7 @@ const sidebarHTML = `
         <li><a href="quizes.html">Quizzes</a></li>
         <li><a href="grades.html">Grades</a></li>
         <li><a href="reminder.html">Reminder</a></li>
-        <li><a href="reminder.html">Settings</a></li>
+        <li><a href="settings.html">Settings</a></li>
     </ul>
 </nav>
 `;
