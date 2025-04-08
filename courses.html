@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="load-sidebar"></aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <div id="courses-section" class="content-section">
+                <header>
+                    <h2>Courses</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+                </header>
+                <section class="new-courses">
+                    <div class="h3">
+                        <h3>New Courses <img src="LL].svg" alt="" onclick="ff()"></h3>
+                    </div>
+                    <div class="course-cars">
+                        <div class="course-car">
+                            <img src="WE.jpg" alt="Web Engineering">
+                            <h4>Web Engineering</h4>
+                            <p>12 lessons</p>
+                        </div>
+                        <div class="course-car">
+                            <img src="SE.png" alt="Software Engineering">
+                            <h4>Software Engineering</h4>
+                            <p>15 lessons</p>
+                        </div>
+                        <div class="course-car">
+                            <img src="mit.jpg" alt="Micro Processor">
+                            <h4>MicroProcessor & interface</h4>
+                            <p>8 lessons</p>
+                        </div>
+                        <div class="course-car">
+                            <img src="CN.jpg" alt="Micro Processor">
+                            <h4>Computer Networking</h4>
+                            <p>18 lessons</p>
+                        </div>
+                        <div class="course-car">
+                            <img src="SP.png" alt="Micro Processor">
+                            <h4>Statistics & Probability</h4>
+                            <p> 23 lessons</p>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+        <!-- Placeholder for sidebar -->
+        <aside id="load-profile-section"></aside>
+    </div>
+    <script>
+        function ff() {
+            let coursesContainer = document.querySelector(".course-cars") || document.querySelector(".course-cards");
+            let courseElements = document.querySelectorAll(".course-car, .course-card");
+
+            if (coursesContainer.classList.contains("course-cars")) {
+                // Change to new state
+                coursesContainer.classList.replace("course-cars", "course-cards");
+                courseElements.forEach(course => course.classList.replace("course-car", "course-card"));
+            } else {
+                // Revert to initial state
+                coursesContainer.classList.replace("course-cards", "course-cars");
+                courseElements.forEach(course => course.classList.replace("course-card", "course-car"));
+            }
+        }
+    </script>
+    <script src="index.js"></script>
+    <script src="reuse.js"></script>
+
+
+
+</body>
+
+</html>

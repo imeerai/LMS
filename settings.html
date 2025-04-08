@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Modal Styles */
+        .image-upload-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .close-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .image-preview-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 16px;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+        }
+
+        .modal-button {
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .cancel-button {
+            background-color: #f5f5f5;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+
+        .update-button {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+        .update-button:hover {
+            background-color: #2563eb;
+        }
+
+        .update-button:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+        }
+
+        /* Hide the actual file input */
+        #file-input {
+            display: none;
+        }
+
+        /* Form Styles */
+        .profile-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+        }
+
+        .dark-mode .modal-content {
+            background-color: #333;
+        }
+
+        save-btn .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            display: block;
+            margin: 0 auto 16px;
+        }
+
+        .profile-name {
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .profile-degree {
+            text-align: center;
+            color: #666;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .password-hint {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="load-sidebar"></aside>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Settings Section -->
+            <div id="settings-section" class="content-section">
+                <header>
+                    <h2>Settings</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+                </header>
+                <section class="new-courses">
+                    <h3>Edit Profile</h3>
+                    <div class="profile-card">
+                        <img src="/dp.jpg" alt="User" class="profile-img" id="profile-img">
+                        <input type="file" id="image-upload" accept="image/*" style="display: none;">
+                        <h4 class="profile-name">Zameer Abbas</h4>
+                        <p class="profile-degree">Bachelor of Engineering in Computer Systems</p>
+
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" value="Zameer Abbas">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cnic">CNIC Number</label>
+                            <input type="text" id="cnic" value="71501-9332374-9">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" value="abbaszameer234@gmail.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="whatsapp">WhatsApp Number</label>
+                            <input type="text" id="whatsapp" value="0318-2221812">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Old Password</label>
+                            <input type="password" id="password" placeholder="Enter your current password">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="new-password">New Password</label>
+                            <input type="password" id="new-password" placeholder="Enter new password">
+                            <div class="password-hint">
+                                <p>Password requirements:</p>
+                                <ul>
+                                    <li>Should be at least 8 characters</li>
+                                    <li>Should include alphabets, numbers and special characters (@ ! # $ %)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button class="save-btn">Update Profile</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+        <aside id="load-profile-section"></aside>
+
+        <script src="reuse.js"></script>
+    </div>
+
+    <!-- Image Upload Modal -->
+    <div id="imageUploadModal" class="image-upload-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Update Profile Picture</h3>
+                <button class="close-button" id="closeModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="image-preview-container">
+                    <img id="imagePreview" class="image-preview" src="/dp.jpg" alt="Profile Preview">
+                </div>
+                <input type="file" id="file-input" accept="image/*">
+                <label for="file-input" class="save-btn">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    Choose New Image
+                </label>
+            </div>
+            <div class="modal-footer">
+                <button id="cancelButton" class="modal-button cancel-button">Cancel</button>
+                <button id="updateButton" class="modal-button update-button" disabled>Update</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elements
+            const modal = document.getElementById('imageUploadModal');
+            const closeModalBtn = document.getElementById('closeModal');
+            const cancelBtn = document.getElementById('cancelButton');
+            const updateBtn = document.getElementById('updateButton');
+            const fileInput = document.getElementById('file-input');
+            const imagePreview = document.getElementById('imagePreview');
+            const profileImages = document.querySelectorAll('img[src="/dp.jpg"]');
+
+            let newImageSelected = false;
+            let newImageData = null;
+
+            // Check if there's a saved image in localStorage
+            const savedImage = localStorage.getItem('profileImage');
+            if (savedImage) {
+                // Update all profile images on the page
+                profileImages.forEach(img => {
+                    img.src = savedImage;
+                });
+                imagePreview.src = savedImage;
+            }
+
+            // Add click event to all profile images
+            profileImages.forEach(img => {
+                img.addEventListener('click', openModal);
+                // Make the cursor a pointer to indicate it's clickable
+                img.style.cursor = 'pointer';
+            });
+
+            // Open modal function
+            function openModal() {
+                modal.style.display = 'flex';
+                // Reset the preview to the current profile image
+                imagePreview.src = profileImages[0].src;
+                newImageSelected = false;
+                updateBtn.disabled = true;
+            }
+
+            // Close modal function
+            function closeModal() {
+                modal.style.display = 'none';
+            }
+
+            // Close modal when clicking close button or cancel
+            closeModalBtn.addEventListener('click', closeModal);
+            cancelBtn.addEventListener('click', closeModal);
+
+            // Handle file selection
+            fileInput.addEventListener('change', function (e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (event) {
+                        imagePreview.src = event.target.result;
+                        newImageData = event.target.result;
+                        newImageSelected = true;
+                        updateBtn.disabled = false;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Handle update button click
+            updateBtn.addEventListener('click', function () {
+                if (newImageSelected && newImageData) {
+                    // Update all profile images on the page
+                    profileImages.forEach(img => {
+                        img.src = newImageData;
+                    });
+
+                    // Save to localStorage for persistence
+                    localStorage.setItem('profileImage', newImageData);
+
+                    // Close the modal
+                    closeModal();
+                }
+            });
+
+            // Close modal when clicking outside
+            window.addEventListener('click', function (e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Form validation for the profile update
+            const newPasswordInput = document.getElementById('new-password');
+            const updateProfileBtn = document.querySelector('.save-btn');
+
+            updateProfileBtn.addEventListener('click', function () {
+                // Simple validation example - you can expand this
+                if (newPasswordInput.value) {
+                    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!#$%])[A-Za-z\d@!#$%]{8,}$/;
+                    if (!passwordRegex.test(newPasswordInput.value)) {
+                        alert('Password must be at least 8 characters and include letters, numbers, and special characters (@, !, #, $, %)');
+                        return;
+                    }
+                }
+
+                // If validation passes, you would typically submit the form or make an API call here
+                alert('Profile updated successfully!');
+            });
+        });
+    </script>
+    <script src="reuse.js"></script>
+    <script src="index.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    
+    /* Alert Styles */
+    #reminder-alert {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 9999;
+      text-align: center;
+      min-width: 300px;
+    }
+    
+    #reminder-alert button {
+      margin-top: 15px;
+      padding: 8px 20px;
+      border: none;
+      background: #4a6cf7;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+    #reminder-alert button:hover {
+      background-color: #3a5bd9;
+    }
+    
+    .popup-btns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .popup-btns button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+    
+    .popup-btns button:nth-child(1),
+    .popup-btns button:nth-child(2),
+    .popup-btns button:nth-child(3) {
+      background-color: #e6f0ff;
+      color: #4a6cf7;
+    }
+    
+    .popup-btns button:nth-child(4) {
+      background-color: #ffebeb;
+      color: #ff4d4d;
+    }
+    
+    .popup-btns button:nth-child(5) {
+      background-color: #f0f0f0;
+      color: #555;
+    }
+    
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      z-index: 101;
+      text-align: center;
+      min-width: 300px;
+    }
+    
+    .popup h3 {
+      margin-top: 0;
+      color: #333;
+      margin-bottom: 10px;
+    }
+    
+    .popup p {
+      margin-bottom: 20px;
+      color: #666;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 100;
+    }
+     /* Reminder Styles */
+     .reminder-item {
+      background: #f9f9f9;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+    
+    .reminder-item p {
+      margin: 0;
+      font-weight: bold;
+    }
+    
+    .delete-btn {
+      background: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+    }
+    
+    .delete-btn:hover {
+      background: #cc0000;
+    }
+    
+    .save-btn {
+      background: #4a6cf7;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out;
+      font-weight: 500;
+    }
+    
+    .save-btn:hover {
+      background: #3a5bd9;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="load-sidebar"></aside>
+        <!-- Main Content -->
+        <main class="main-content">
+          <div id="reminder-section" class="content-section">
+            <header>
+              <h2>Reminder</h2>
+              <div class="search-bar">
+                <input type="text" placeholder="Search..." />
+              </div>
+              <button id="theme-toggle">🌙</button>
+            </header>
+            <section class="new-courses">
+                <h3>Reminders</h3>
+              <div class="profile-card">
+                <form id="reminderForm">
+                  <div class="form-group">
+                    <label for="reminderTitle">Reminder Title:</label>
+                    <input type="text" id="reminderTitle" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="reminderDate">Date:</label>
+                    <input type="date" id="reminderDate" required />
+                  </div>
+                  <div class="form-group">
+                    <label for="reminderTime">Time:</label>
+                    <input type="time" id="reminderTime" required />
+                  </div>
+                  <div class="form-group">
+                    <button class="save-btn" type="submit" >Add to calendar</button>
+                  </div>
+                </form>
+                <h2>Your Reminders</h2>
+                <div id="reminderList"></div>
+              </div>
+            </section>
+          </div>
+        </main>
+        <aside id="load-profile-section"></aside>
+      </div>
+
+   <div class="overlay" id="overlay"></div>
+  <div class="popup" id="popup">
+    <h3 id="popup-title">Reminder</h3>
+    <p id="popup-time"></p>
+    <div class="popup-btns">
+      <button onclick="extendReminder(2)">+2 min</button>
+      <button onclick="extendReminder(5)">+5 min</button>
+      <button onclick="extendReminder(10)">+10 min</button>
+      <button onclick="deleteReminder()">Delete</button>
+      <button onclick="closePopup()">Close</button>
+    </div>
+  </div>
+
+  <!-- Popup for Reminder -->
+  <div id="reminder-alert">
+    <h3 id="reminder-alert-title">⏰ Reminder!</h3>
+    <p id="reminder-alert-msg"></p>
+    <button onclick="document.getElementById('reminder-alert').style.display='none'">OK</button>
+  </div>
+ 
+  <script>
+    // Current popup reminder reference
+    let currentPopupReminder = null;
+  
+    // DOM Elements
+    const reminderForm = document.getElementById('reminderForm');
+    const reminderTitleInput = document.getElementById('reminderTitle');
+    const reminderDateInput = document.getElementById('reminderDate');
+    const reminderTimeInput = document.getElementById('reminderTime');
+    const reminderList = document.getElementById('reminderList');
+  
+    // Initialize
+    document.addEventListener('DOMContentLoaded', function () {
+      // Set today's date as default
+      const today = new Date();
+      const formattedDate = today.toISOString().split('T')[0];
+      reminderDateInput.value = formattedDate;
+  
+      // Load reminders from localStorage
+      loadReminders();
+  
+      // Set up event listener
+      reminderForm.addEventListener('submit', addReminder);
+  
+      // Start checking for reminders
+      setInterval(checkReminders, 3000); // Check every 3 seconds
+    });
+  
+    function addReminder(e) {
+      e.preventDefault();
+  
+      const title = reminderTitleInput.value.trim();
+      const date = reminderDateInput.value;
+      const time = reminderTimeInput.value;
+  
+      if (!title || !date || !time) {
+        showAlert('Please fill in all fields');
+        return;
+      }
+  
+      const reminder = {
+        id: Date.now().toString(),
+        title,
+        date,
+        time
+      };
+  
+      let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+      reminders.push(reminder);
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+  
+      reminderTitleInput.value = '';
+      loadReminders();
+      showAlert(`Reminder "${title}" added successfully!`);
+    }
+  
+    function loadReminders() {
+      const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+      reminderList.innerHTML = '';
+  
+      if (reminders.length === 0) {
+        reminderList.innerHTML = '<p style="color: #777; text-align: center; margin-top: 20px;">No reminders yet. Add one above!</p>';
+        return;
+      }
+  
+      reminders.sort((a, b) => {
+        const dateA = new Date(`${a.date}T${a.time}`);
+        const dateB = new Date(`${b.date}T${b.time}`);
+        return dateA - dateB;
+      });
+  
+      reminders.forEach(reminder => {
+        const reminderElement = document.createElement('div');
+        reminderElement.className = 'reminder-item';
+  
+        const reminderDate = new Date(`${reminder.date}T${reminder.time}`);
+        const formattedDate = reminderDate.toLocaleString();
+  
+        reminderElement.innerHTML = `
+          <div>
+            <p>${reminder.title}</p>
+            <small style="color: #777;">${formattedDate}</small>
+          </div>
+          <button class="delete-btn" onclick="deleteReminderById('${reminder.id}')">Delete</button>
+        `;
+  
+        reminderList.appendChild(reminderElement);
+      });
+    }
+  
+    function deleteReminderById(id) {
+      let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+      reminders = reminders.filter(reminder => reminder.id !== id);
+      localStorage.setItem('reminders', JSON.stringify(reminders));
+      loadReminders();
+    }
+  
+    function checkReminders() {
+      const now = new Date();
+      const reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+  
+      reminders.forEach(reminder => {
+        const reminderTime = new Date(`${reminder.date}T${reminder.time}`);
+        const diff = reminderTime.getTime() - now.getTime();
+  
+        if (diff <= 0 && diff > -60000) {
+          openPopup(reminder);
+        }
+      });
+    }
+  
+    function openPopup(reminder) {
+      currentPopupReminder = reminder;
+      document.getElementById('popup-title').innerText = reminder.title;
+  
+      const reminderDate = new Date(`${reminder.date}T${reminder.time}`);
+      document.getElementById('popup-time').innerText = `Scheduled at ${reminderDate.toLocaleString()}`;
+  
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('popup').style.display = 'block';
+    }
+  
+    function closePopup() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('popup').style.display = 'none';
+      currentPopupReminder = null;
+    }
+  
+    function extendReminder(minutes) {
+      if (!currentPopupReminder) return;
+  
+      let reminders = JSON.parse(localStorage.getItem('reminders')) || [];
+      const index = reminders.findIndex(r => r.id === currentPopupReminder.id);
+  
+      if (index !== -1) {
+        const reminderDate = new Date(`${reminders[index].date}T${reminders[index].time}`);
+        reminderDate.setMinutes(reminderDate.getMinutes() + minutes);
+        reminders[index].time = `${String(reminderDate.getHours()).padStart(2, '0')}:${String(reminderDate.getMinutes()).padStart(2, '0')}`;
+        localStorage.setItem('reminders', JSON.stringify(reminders));
+        closePopup();
+        loadReminders();
+        showAlert(`Reminder extended by ${minutes} minutes`);
+      }
+    }
+  
+    function deleteReminder() {
+      if (!currentPopupReminder) return;
+      deleteReminderById(currentPopupReminder.id);
+      closePopup();
+      showAlert('Reminder deleted');
+    }
+  
+    function showAlert(message) {
+      const alertMsg = document.getElementById('reminder-alert-msg');
+      alertMsg.innerText = message;
+      const alertBox = document.getElementById('reminder-alert');
+      alertBox.style.display = 'block';
+      setTimeout(() => {
+        alertBox.style.display = 'none';
+      }, 3000);
+    }
+  </script>
+  <script src="index.js"></script>
+  <script src="reuse.js"></script>
+
+  
+
+ </body>
+
+</html>

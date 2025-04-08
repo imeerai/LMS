@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="load-sidebar"></aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <div id="grades-section" class="content-section">
+                <header>
+                    <h2>Grades</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+                </header>
+                <section class="my-courses">
+                    <h3>Progress</h3>
+                    <div>
+                        <div style="background-color: pink;">
+                            <span>Today's task</span>
+                            <h2>7</h2>
+                            <p><a href="">details → </a></p>
+                        </div>
+                        <div>
+                            <span>You completed</span>
+                            <h2>72</h2>
+                            <p><a href="">details → </a></p>
+                        </div>
+                    </div>
+                </section>
+                <section class="new-courses">
+                    <h3>Progress</h3>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th class="wide">Courses</th>
+                                <th class="medium">Progress</th>
+                                <th class="small">Marks</th>
+                                <th class="wide">Certificate</th>
+                            </tr>
+                            <tr>
+                                <td>Web Engineering (WE)</td>
+                                <td class="completed">Completed</td>
+                                <td>87</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Software Engineering (SP)</td>
+                                <td class="completed">Completed</td>
+                                <td>89</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>System Programming (SP)</td>
+                                <td class="completed">Completed</td>
+                                <td>92</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Computer Networks (CN)</td>
+                                <td class="completed">Completed</td>
+                                <td>66</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                            <tr>
+                                <td>Management Information Technology (MIT)</td>
+                                <td class="completed">Completed</td>
+                                <td>78</td>
+                                <td class="certificate"><a href="#">Download Certificate</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <h3>Marks Progress Chart</h3>
+                    <canvas id="marksChart"></canvas>
+                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+                    <script>
+                        const ctx = document.getElementById('marksChart').getContext('2d');
+
+                        const marksChart = new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: ['WE', 'SP', 'SP', 'CN', 'MIT'],
+                                datasets: [{
+                                    label: 'Marks',
+                                    data: [87, 89, 92, 66, 78],
+                                    backgroundColor: ['#4CAF50', '#2196F3', '#FF9800', '#F44336', '#9C27B0'],
+                                    borderColor: '#000',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                </section>
+            </div>
+
+
+        </main>
+        <aside id="load-profile-section"></aside>
+
+    </div>
+    <script src="index.js"></script>
+    <script src="reuse.js"></script>
+
+</body>
+
+</html>

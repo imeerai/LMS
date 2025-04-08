@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js"></script>
+    <link rel="stylesheet" href="style.css">    
+</head>
+<style>
+    .start-quiz {
+    background-color: #28a745; /* Green color */
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.start-quiz:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.start-quiz:active {
+    background-color: #1e7e34; /* Even darker green when clicked */
+    transform: scale(0.98);
+}
+
+</style>
+
+<body>
+
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside id="load-sidebar"></aside>       
+        <!-- Main Content -->
+        <main class="main-content">
+           
+            <div id="quizzes-section" class="content-section" >
+                <header>
+                    <h2>Quizzes</h2>
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    <button id="theme-toggle">🌙</button>
+                </header>
+                <section class="new-courses">
+                    <h3>Today's Quizzes</h3>
+                    <div class="course-cards">
+                        <div class="course-card" style="background-color: rgba(255, 192, 203, 0.463);">
+                            <img src="WE.jpg" alt="Web Engineering">
+                            <h4>Web Engineering</h4>
+                            <p>15 mins</p>
+                            <button class="start-quiz">Start Quiz</button>
+                        </div>
+                        <div class="course-card">
+                            <img src="SE.png" alt="Software Engineering">
+                            <h4>Software Engineering</h4>
+                            <p>No quiz today</p>
+                        </div>
+                        <div class="course-card" style="background-color: rgba(255, 192, 203, 0.463);">
+                            <img src="mit.jpg" alt="Micro Processor">
+                            <h4>MicroProcessor & interface</h4>
+                            <p>25 mins</p>
+                            <button class="start-quiz">Start Quiz</button>
+                        </div>
+                        <div class="course-card" style="background-color: rgba(255, 192, 203, 0.463);">
+                            <img src="SP.png" alt="Micro Processor">
+                            <h4>Statistics and Probability</h4>
+                            <p>30 mins</p>
+                            <button class="start-quiz">Start Quiz</button>
+                        </div>
+                        <div class="course-card">
+                            <img src="CN.jpg" alt="CN">
+                            <h4>Computer Networking</h4>
+                            <p>No quiz today</p>
+                        </div>
+                        
+                    </div>
+                </section>
+
+            </div>
+
+        </main>
+        <aside id="load-profile-section"></aside>
+    </div>
+    <script src="index.js"></script>
+    <script src="reuse.js"></script>
+
+</body>
+
+</html>
